@@ -1,11 +1,6 @@
 package com.dsantana.minhasfinancas.api.dto;
 
-import java.time.LocalDate;
-
-import com.dsantana.minhasfinancas.model.entity.Usuario;
-import com.dsantana.minhasfinancas.model.enums.StatusLancamento;
-import com.dsantana.minhasfinancas.model.enums.TipoLancamento;
-
+import java.math.BigDecimal;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,19 +10,21 @@ import lombok.Setter;
 @Builder
 public class LancamentoDTO {
 	
+	private Long id;
+	
 	private String descricao;
 	
 	private Integer mes;
 	
 	private Integer ano;
 	
-	private Usuario usuario;
+	private BigDecimal valor;
 	
-	private LocalDate dataCadastro;
+	private Long usuario;
 	
-	private TipoLancamento tipo;
+	private String tipo;
 	
-	private StatusLancamento status;
+	private String status;
 	
 	
 }

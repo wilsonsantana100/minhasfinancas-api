@@ -26,7 +26,6 @@ public class LancamentoController {
 		
 	
 	
-
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@PostMapping
 	public ResponseEntity salvarLancamento(@RequestBody LancamentoDTO dto) {
@@ -36,7 +35,6 @@ public class LancamentoController {
 				.mes(dto.getAno())
 				.ano(dto.getAno())
 				.usuario(dto.getUsuario())
-				.dataCadastro(dto.getDataCadastro())
 				.tipo(dto.getTipo())
 				.status(dto.getStatus()).build();
 		
