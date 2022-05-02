@@ -10,8 +10,7 @@ import com.dsantana.minhasfinancas.model.enums.StatusLancamento;
 @Service
 public interface LancamentoService {
 
-	Lancamento salvar(Lancamento lancamento);
-	
+		
 	Lancamento atualizar(Lancamento lancamento);
 	
 	void deletar(Lancamento lancamento);
@@ -21,6 +20,8 @@ public interface LancamentoService {
 	void atualizarStatus(Lancamento lancamento, StatusLancamento status);
 	
 	void validar(Lancamento lanamento);
+
+	Lancamento salvarLancamento(Lancamento lancamento);
 	
 
 	

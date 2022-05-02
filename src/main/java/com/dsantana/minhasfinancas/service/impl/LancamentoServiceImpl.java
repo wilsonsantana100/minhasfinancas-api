@@ -32,7 +32,7 @@ public class LancamentoServiceImpl implements LancamentoService {
 
 	@Override
 	@Transactional
-	public Lancamento salvar(Lancamento lancamento) {
+	public Lancamento salvarLancamento(Lancamento lancamento) {
 		validar(lancamento);
 		lancamento.setStatus(StatusLancamento.PENDENTE);
 		return repository.save(lancamento);
