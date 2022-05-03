@@ -2,11 +2,9 @@ package com.dsantana.minhasfinancas.api.dto;
 
 import java.math.BigDecimal;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 @Builder
 public class LancamentoDTO {
 	
@@ -20,7 +18,7 @@ public class LancamentoDTO {
 	
 	private BigDecimal valor;
 	
-	private Long usuario;
+	private Long usuario;   // vai passar id do usuario e nao o objeto.
 	
 	private String tipo;
 	

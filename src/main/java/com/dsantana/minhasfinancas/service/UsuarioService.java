@@ -1,5 +1,7 @@
 package com.dsantana.minhasfinancas.service;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.dsantana.minhasfinancas.model.entity.Usuario;
@@ -12,5 +14,7 @@ public interface UsuarioService {
 	Usuario salvarUsuario(Usuario usuario);
 	
 	void validarEmail(String email);
+	
+	 Optional<Usuario> obterPorId (Long id);
 		
-}
+} 
