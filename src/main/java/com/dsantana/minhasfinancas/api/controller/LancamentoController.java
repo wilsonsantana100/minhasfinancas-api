@@ -1,6 +1,8 @@
 package com.dsantana.minhasfinancas.api.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,10 +24,8 @@ import com.dsantana.minhasfinancas.service.UsuarioService;
 public class LancamentoController {
 	
 	
-	@SuppressWarnings("unused")
 	private LancamentoService service;
 	
-	@SuppressWarnings("unused")
 	private UsuarioService usuarioService;
 	
 	
@@ -35,14 +35,13 @@ public class LancamentoController {
 	}
 
 
-	@SuppressWarnings({ "rawtypes" })
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@PostMapping
 	public ResponseEntity salvarLancamento(@RequestBody LancamentoDTO dto) {
-				
 		try {
 			Lancamento entidade = converter(dto);
 			entidade = service.salvarLancamento(entidade);
-			return ResponseEntity.ok(entidade);
+			return new ResponseEntity(entidade, HttpStatus.CREATED);
 		} catch (RegraNegocioException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
@@ -50,13 +49,35 @@ public class LancamentoController {
 	}
 	
 	
-	@SuppressWarnings("rawtypes")
-	@PutMapping
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@PutMapping("{id}")
 	public ResponseEntity atualizar( @PathVariable Long id, @RequestBody LancamentoDTO dto) {
-		return null;
 		
+		return service.obterPorId(id).map( entity -> {
+			
+			try {
+				Lancamento lancamento = converter(dto);
+				lancamento.setId(entity.getId());
+				service.atualizar(lancamento);
+				return ResponseEntity.ok(lancamento);
+			} catch (RegraNegocioException e) {
+				return ResponseEntity.badRequest().body(e.getMessage());
+			}
+		}).orElseGet( () ->
+				new ResponseEntity("Lancamento não encontrado na base de Dados.", HttpStatus.BAD_REQUEST));
 	}
 	
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@DeleteMapping("{id}")
+	public ResponseEntity deletar( @PathVariable("id") Long id ) {
+		return service.obterPorId(id).map( entidade -> {
+			service.deletar(entidade);
+			return new ResponseEntity( HttpStatus.NO_CONTENT);
+		}).orElseGet( () ->
+		new ResponseEntity("Lancamento não encontrado na base de Dados.", HttpStatus.BAD_REQUEST));
+		
+	}
 	
 	
 	public Lancamento converter(LancamentoDTO dto) {

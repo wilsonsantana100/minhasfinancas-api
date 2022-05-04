@@ -1,6 +1,7 @@
 package com.dsantana.minhasfinancas.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,9 @@ public interface LancamentoService {
 	void validar(Lancamento lanamento);
 
 	Lancamento salvarLancamento(Lancamento lancamento);
+	
+	Optional<Lancamento> obterPorId(Long id);
+	
 	
 
 	
