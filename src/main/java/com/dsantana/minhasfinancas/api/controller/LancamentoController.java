@@ -19,21 +19,19 @@ import com.dsantana.minhasfinancas.model.enums.TipoLancamento;
 import com.dsantana.minhasfinancas.service.LancamentoService;
 import com.dsantana.minhasfinancas.service.UsuarioService;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/api/lancamentos")
+@RequiredArgsConstructor
 public class LancamentoController {
 	
 	
-	private LancamentoService service;
-	
-	private UsuarioService usuarioService;
-	
+	private final LancamentoService service;
+	private final UsuarioService usuarioService;
 	
 	
-	public LancamentoController(LancamentoService service) {
-		this.service = service;
-	}
-
+		
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@PostMapping
@@ -97,8 +95,15 @@ public class LancamentoController {
 		
 		lancamento.setUsuario(usuario);
 		
-		lancamento.setTipo(TipoLancamento.valueOf(dto.getTipo()));
-		lancamento.setStatus(StatusLancamento.valueOf(dto.getStatus()));
+		if(dto.getTipo() != null) {
+			lancamento.setTipo(TipoLancamento.valueOf(dto.getTipo()));
+		}
+		
+		
+		if(dto.getStatus() != null) {
+			lancamento.setStatus(StatusLancamento.valueOf(dto.getStatus()));
+		}
+		
 		
 		return lancamento;
 		

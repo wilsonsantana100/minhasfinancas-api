@@ -8,22 +8,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dsantana.minhasfinancas.api.dto.UsuarioDTO;
+import com.dsantana.minhasfinancas.exception.ErroAutenticacao;
 import com.dsantana.minhasfinancas.exception.RegraNegocioException;
 import com.dsantana.minhasfinancas.model.entity.Usuario;
 import com.dsantana.minhasfinancas.service.UsuarioService;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("/api/usuarios")
+@RequiredArgsConstructor
 public class UsuarioController {
 	
 	// Endpoints Rest
 	
-	private UsuarioService service;
+	private final UsuarioService service;
 	
 	
-	public UsuarioController( UsuarioService service) {
-		this.service = service;
+	
+	@SuppressWarnings("rawtypes")
+	@PostMapping("/autenticar")
+	public ResponseEntity autenticar( @RequestBody UsuarioDTO dto) {
+		
+		try {
+			Usuario usuarioAutenticado = service.autenticar(dto.getEmail(), dto.getSenha());
+			return ResponseEntity.ok(usuarioAutenticado);
+		} catch (ErroAutenticacao e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
 	}
+	
 
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
