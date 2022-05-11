@@ -1,5 +1,6 @@
 package com.dsantana.minhasfinancas.api.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dsantana.minhasfinancas.api.dto.AtualizaStatusDTO;
 import com.dsantana.minhasfinancas.api.dto.LancamentoDTO;
 import com.dsantana.minhasfinancas.exception.RegraNegocioException;
 import com.dsantana.minhasfinancas.model.entity.Lancamento;
@@ -34,7 +36,9 @@ public class LancamentoController {
 	private final LancamentoService service;
 	private final UsuarioService usuarioService;
 	
-	@SuppressWarnings({ "rawtypes", "unused" })
+	
+	
+	@SuppressWarnings({ "rawtypes" })
 	@GetMapping
 	public ResponseEntity buscar(
 			@RequestParam(value ="descricao", required = false) String descricao,
@@ -55,12 +59,12 @@ public class LancamentoController {
 			lancamentoFiltro.setUsuario(usuario.get());
 		}
 		
-		
-		
-		
+		List<Lancamento> lancamentos = service.buscar(lancamentoFiltro);
+		return ResponseEntity.ok(lancamentos);
 		
 	}
 
+	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@PostMapping
 	public ResponseEntity salvarLancamento(@RequestBody LancamentoDTO dto) {
@@ -92,6 +96,28 @@ public class LancamentoController {
 		}).orElseGet( () ->
 				new ResponseEntity("Lancamento não encontrado na base de Dados.", HttpStatus.BAD_REQUEST));
 	}
+	
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@PutMapping ("{id}/atualiza-status")
+	public ResponseEntity atualizarStatus( @PathVariable("id") Long id, @RequestBody AtualizaStatusDTO dto) {
+		return service.obterPorId(id).map( entity -> {
+			StatusLancamento statusSelecionado = StatusLancamento.valueOf(dto.getStatus());
+			
+			if (statusSelecionado == null) {
+				return ResponseEntity.badRequest().body("Não foi possível atualizar o status do lancamento, envie um status válido.");
+			}
+			
+			try {
+				entity.setStatus(statusSelecionado);
+				service.atualizar(entity);
+				return ResponseEntity.ok(entity);
+			} catch (RegraNegocioException e) {
+				return ResponseEntity.badRequest().body(e.getMessage());
+			}		
+		}).orElseGet( () ->
+		new ResponseEntity("Lancamento não encontrado na base de Dados.", HttpStatus.BAD_REQUEST));
+    }
 	
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
