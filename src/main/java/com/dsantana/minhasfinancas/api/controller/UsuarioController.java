@@ -2,6 +2,8 @@ package com.dsantana.minhasfinancas.api.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,7 @@ import com.dsantana.minhasfinancas.api.dto.UsuarioDTO;
 import com.dsantana.minhasfinancas.exception.ErroAutenticacao;
 import com.dsantana.minhasfinancas.exception.RegraNegocioException;
 import com.dsantana.minhasfinancas.model.entity.Usuario;
+import com.dsantana.minhasfinancas.service.LancamentoService;
 import com.dsantana.minhasfinancas.service.UsuarioService;
 
 import lombok.RequiredArgsConstructor;
@@ -23,6 +26,8 @@ public class UsuarioController {
 	// Endpoints Rest
 	
 	private final UsuarioService service;
+	@SuppressWarnings("unused")
+	private final LancamentoService lancamentoService;
 	
 	
 	
@@ -57,5 +62,19 @@ public class UsuarioController {
 		}
 			
 	}
+	
+	
+	@SuppressWarnings("rawtypes")
+	@GetMapping("{id}/saldo")
+	public ResponseEntity obterSaldo(@PathVariable("id") Long id) {
+		
+		
+		
+		
+		return null;	
+		
+		
+	}
+	
 	
 }

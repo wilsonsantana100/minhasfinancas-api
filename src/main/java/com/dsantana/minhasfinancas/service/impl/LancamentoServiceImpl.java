@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.dsantana.minhasfinancas.exception.RegraNegocioException;
 import com.dsantana.minhasfinancas.model.entity.Lancamento;
 import com.dsantana.minhasfinancas.model.enums.StatusLancamento;
+import com.dsantana.minhasfinancas.model.enums.TipoLancamento;
 import com.dsantana.minhasfinancas.model.repository.LancamentoRepository;
 import com.dsantana.minhasfinancas.service.LancamentoService;
 
@@ -108,6 +109,27 @@ public class LancamentoServiceImpl implements LancamentoService {
 	@Override
 	public Optional<Lancamento> obterPorId(Long id) {
 		return repository.findById(id);
+	}
+
+
+
+	@Override
+	public BigDecimal obterSaldoPorUsuario(Long id) {
+		
+		BigDecimal receitas = repository.obterSaldoPorTipoLancamentoEUsuario(id, TipoLancamento.RECEITA.name());
+		
+		BigDecimal despesas = repository.obterSaldoPorTipoLancamentoEUsuario(id, TipoLancamento.DESPESA.name());
+		
+		if (receitas == null) {
+			receitas = BigDecimal.ZERO;
+		}
+		
+		if (despesas == null) {
+			despesas = BigDecimal.ZERO;
+		}
+		
+		
+		return receitas.subtract(despesas);
 	}
 
 }
