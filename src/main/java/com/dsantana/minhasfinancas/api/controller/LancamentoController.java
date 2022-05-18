@@ -102,6 +102,7 @@ public class LancamentoController {
 	@PutMapping ("{id}/atualiza-status")
 	public ResponseEntity atualizarStatus( @PathVariable("id") Long id, @RequestBody AtualizaStatusDTO dto) {
 		return service.obterPorId(id).map( entity -> {
+			
 			StatusLancamento statusSelecionado = StatusLancamento.valueOf(dto.getStatus());
 			
 			if (statusSelecionado == null) {
