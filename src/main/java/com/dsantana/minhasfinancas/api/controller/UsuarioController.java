@@ -29,7 +29,6 @@ public class UsuarioController {
 	// Endpoints Rest
 	
 	private final UsuarioService service;
-	@SuppressWarnings("unused")
 	private final LancamentoService lancamentoService;
 	
 	
@@ -65,6 +64,7 @@ public class UsuarioController {
 		}
 			
 	}
+	
 	
 	
 	@SuppressWarnings("rawtypes")
