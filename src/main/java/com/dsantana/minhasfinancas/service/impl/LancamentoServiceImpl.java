@@ -1,6 +1,7 @@
 package com.dsantana.minhasfinancas.service.impl;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -36,6 +37,9 @@ public class LancamentoServiceImpl implements LancamentoService {
 	@Transactional
 	public Lancamento salvarLancamento(Lancamento lancamento) {
 		validar(lancamento);
+		
+		lancamento.setDataCadastro(LocalDate.now());
+		
 		lancamento.setStatus(StatusLancamento.PENDENTE);
 		return repository.save(lancamento);
 	}

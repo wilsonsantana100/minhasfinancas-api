@@ -50,7 +50,7 @@ public class UsuarioController {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@PostMapping        
 	public ResponseEntity salvarUsuario( @RequestBody UsuarioDTO dto) {
-			
+		
 		Usuario usuario = Usuario.builder()
 				.nome(dto.getNome())
 				.email(dto.getEmail())
