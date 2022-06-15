@@ -19,6 +19,8 @@ import com.dsantana.minhasfinancas.service.UsuarioService;
 public class UsuarioServiceImpl implements UsuarioService {
 
 	private UsuarioRepository usuarioRepository;
+	
+	
 			
 
 	public UsuarioServiceImpl(UsuarioRepository usuarioRepository) {
@@ -35,7 +37,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 		
 			
-		if(usuario.get().getSenha().equals(senha) ) {
+		if(!usuario.get().getSenha().equals(senha) ) {
 	    	throw new ErroAutenticacao("Senha inválida.");
 		}
 		
