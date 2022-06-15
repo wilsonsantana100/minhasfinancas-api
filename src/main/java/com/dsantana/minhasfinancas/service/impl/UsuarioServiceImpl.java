@@ -1,5 +1,6 @@
 package com.dsantana.minhasfinancas.service.impl;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -43,6 +44,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Transactional
 	public Usuario salvarUsuario(Usuario usuario) {
 		validarEmail(usuario.getEmail());
+		
+		usuario.setDataCadastro(LocalDate.now());
+		
 		return usuarioRepository.save(usuario);
 	}
 
