@@ -3,10 +3,11 @@ package com.dsantana.minhasfinancas.service.impl;
 import java.time.LocalDate;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+
 
 import com.dsantana.minhasfinancas.exception.ErroAutenticacao;
 import com.dsantana.minhasfinancas.exception.RegraNegocioException;
@@ -18,8 +19,10 @@ import com.dsantana.minhasfinancas.service.UsuarioService;
 public class UsuarioServiceImpl implements UsuarioService {
 
 	private UsuarioRepository usuarioRepository;
-		
-	@Autowired
+	
+	
+			
+
 	public UsuarioServiceImpl(UsuarioRepository usuarioRepository) {
 		super();
 		this.usuarioRepository = usuarioRepository;
@@ -33,8 +36,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 			throw new ErroAutenticacao("Usuário não encontrado para o email informado.");
 		}
 		
-		if(usuario.get().getSenha().equals(senha) ) {
-			throw new ErroAutenticacao("Senha inválida.");
+			
+		if(!usuario.get().getSenha().equals(senha) ) {
+	    	throw new ErroAutenticacao("Senha inválida.");
 		}
 		
 		return usuario.get();
@@ -46,10 +50,15 @@ public class UsuarioServiceImpl implements UsuarioService {
 		validarEmail(usuario.getEmail());
 		
 		usuario.setDataCadastro(LocalDate.now());
+<<<<<<< HEAD
 		
+=======
+						
+>>>>>>> 2b1f5b4192b18b8b44bb2c9dabd2c058bee7fa6b
 		return usuarioRepository.save(usuario);
 	}
-
+	
+	
 	@Override
 	public void validarEmail(String email) {
 		boolean existe = usuarioRepository.existsByEmail(email) ;
