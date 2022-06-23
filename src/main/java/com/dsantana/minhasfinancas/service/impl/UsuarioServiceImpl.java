@@ -50,11 +50,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 		validarEmail(usuario.getEmail());
 		
 		usuario.setDataCadastro(LocalDate.now());
-<<<<<<< HEAD
-		
-=======
-						
->>>>>>> 2b1f5b4192b18b8b44bb2c9dabd2c058bee7fa6b
+
 		return usuarioRepository.save(usuario);
 	}
 	
