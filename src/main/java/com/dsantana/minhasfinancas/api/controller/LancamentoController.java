@@ -65,8 +65,7 @@ public class LancamentoController {
 		return ResponseEntity.ok(lancamentos);
 		
 	}
-<<<<<<< HEAD
-=======
+
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@GetMapping("{id}")
@@ -75,7 +74,6 @@ public class LancamentoController {
 					.map( lancamento -> new ResponseEntity(converter(lancamento), HttpStatus.OK) )
 					.orElseGet( () -> new ResponseEntity(HttpStatus.NOT_FOUND) );
 	}
->>>>>>> 1a9c095 (commit api 20/07/23)
 
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -146,8 +144,7 @@ public class LancamentoController {
 	}
 	
 	
-<<<<<<< HEAD
-=======
+
 	private LancamentoDTO converter(Lancamento lancamento) {
 		return LancamentoDTO.builder()
 					.id(lancamento.getId())
@@ -163,7 +160,7 @@ public class LancamentoController {
 	}
 	
 	
->>>>>>> 1a9c095 (commit api 20/07/23)
+
 	public Lancamento converter(LancamentoDTO dto) {
 		
 		Lancamento lancamento = new Lancamento();
